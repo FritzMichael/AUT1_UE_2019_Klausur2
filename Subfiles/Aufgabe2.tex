@@ -1,0 +1,60 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=true,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}
+\begin{task}[Stabilität und Linearisierung]
+Betrachten Sie das System
+\[ 
+\begin{aligned} \dot{\mathbf{x}} &=\mathbf{f}(\mathbf{x}, u)=\left[\begin{array}{c}{x_{2}} \\ {x_{1} u}\end{array}\right] \\ y &=g(\mathbf{x}, u)=x_{1} \end{aligned}
+ \]
+ \begin{enumerate}[i.]
+     \item Bestimmen Sie den Anfangswert $\mathbf{x}(0)$ sowie die Eingangsgröße $u(t)$ so, dass sich die Trajektorie $y(t)=\sin (t)$ einstellt.
+ \begin{solution}
+ $y = x_1 = \sin (t) \rightarrow \dot{x_1} = x_2 = \cos (t) \rightarrow \dot{x_2} = - \sin (t) = \sin (t) u \rightarrow u = -1$
+ 
+ \[ \mathbf{x}(0) = \begin{pmatrix} \sin (0) \\ \cos(0) \end{pmatrix} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}\]
+    \end{solution}
+ \item Linearisieren Sie das System entlang der Trajektorie aus Punkt i und geben Sie die Systemgleichungen des linearisierten Systems explizit an.
+ \begin{solution}
+ \[ 
+\mathbf{A}(t)=\frac{\partial}{\partial \mathbf{x}} \mathbf{f}(\tilde{\mathbf{x}}(t), \tilde{\mathbf{u}}(t)) = \begin{pmatrix} 0 & 1 \\ -1 & 0\end{pmatrix}, \quad
+\mathbf{B}(t)=\frac{\partial}{\partial \mathbf{u}} \mathbf{f}(\tilde{\mathbf{x}}(t), \tilde{\mathbf{u}}(t)) = \begin{pmatrix} 0 \\ \sin (t) \end{pmatrix}
+ \]
+ \[ 
+\mathbf{C}(t)=\frac{\partial}{\partial \mathbf{x}} \mathbf{g}(\tilde{\mathbf{x}}(t), \mathbf{\tilde { u }}(t)) = \begin{pmatrix} 1 & 0 \end{pmatrix}, \quad 
+\mathbf{D}(t) = \mathbf{0}
+ \]
+ 
+ Das linearisierte System explizit angegeben:
+ \[ \begin{aligned} \Delta \dot{\mathbf{x}} =& \begin{pmatrix} 0 & 1 \\ -1 & 0\end{pmatrix} \Delta \mathbf{x} + \begin{pmatrix} 0 \\ \sin (t) \end{pmatrix} \Delta u\\ 
+ \Delta y =& \begin{pmatrix} 1 & 0 \end{pmatrix} \Delta \mathbf{x}
+    \end{aligned}
+ \]
+    \end{solution}
+ \end{enumerate}
+\end{task}
+\end{document}

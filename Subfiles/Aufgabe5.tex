@@ -1,0 +1,75 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=true,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}
+\begin{task}[Beobachtbarkeit und Beobachterentwurf]
+Das LTI-System
+\[ 
+\begin{aligned} \dot{\mathbf{x}} &=\left[\begin{array}{lll}{1} & {0} & {1} \\ {0} & {\alpha} & {0} \\ {1} & {0} & {1}\end{array}\right] \mathbf{x}+\left[\begin{array}{l}{\beta} \\ {2} \\ {0}\end{array}\right] u \\ y &=\left[\begin{array}{lll}{\gamma} & {2} & {0}\end{array}\right] \mathbf{x} \end{aligned}
+ \]
+hängt von den Parametern $\alpha, \beta, \gamma \in \mathbb{R}$ ab.
+\begin{enumerate}[i.]
+    \item Untersuchen Sie, für welche Werte von $\alpha, \beta$ und $\gamma$ das System beobachtbar ist. Geben Sie Ihre Lösungen jeweils als Tupel $\alpha, \beta, \gamma$ an.
+\begin{solution}
+\[ \mathcal{O} = \text{span}\left\{ \mathbf{c}^T,\mathbf{c}^T\mathbf{A},\mathbf{c}^T\mathbf{A}^2  \right\}=
+\text{span}\left\{ \begin{pmatrix}
+\gamma & 2 & 0
+\end{pmatrix}, \begin{pmatrix}
+\gamma & 2 \alpha & \gamma
+\end{pmatrix},
+\begin{pmatrix}
+2 \gamma & 2 \alpha^2 & 2 \gamma
+\end{pmatrix}\right\}\]
+\[ \rightarrow \mathbf{M}_{\mathcal{O}} = \begin{pmatrix}
+\gamma & 2 & 0 \\ \gamma & 2 \alpha & \gamma \\ 2 \gamma & 2 \alpha^2 & 2 \gamma
+\end{pmatrix}\]
+Das System ist genau dann beobachtbar, wenn die Matrix $\mathbf{M}_{\mathcal{O}}$ vollen Rang besitzt bzw. eine Determinante ungleich 0:
+\[\det \mathbf{M}_{\mathcal{O}} = 4 \gamma^2 \alpha + 4 \gamma^2 - 2\alpha^2 \gamma - 4\gamma^2 \neq 0\]
+\[2 \alpha \gamma \left( 2\gamma - \alpha \right) \neq 0\]
+
+$\beta$ hat keinen Einfluss auf die Beobachtbarkeit des Systems. Das System ist beobachtbar für $\gamma \neq 0$, $\alpha \neq 0$ und $2 \gamma \neq \alpha$.
+
+Die Menge an Tupel kann so geschrieben werden:
+\[ \left\{ \left(\alpha,\beta,\gamma \right) | \  \alpha,\beta,\gamma \in \mathbb{R} \land \alpha \neq 0 \land  \gamma \neq 0 \land \alpha \neq 2 \gamma \right\} \]
+\end{solution}
+\item Für $\alpha=\beta=\gamma=0$ ist das System nicht beobachtbar. Welche der Mengen
+\[ 
+M_{1}=\left\{\left[\begin{array}{l}{1} \\ {0} \\ {1}\end{array}\right]\right\}, \quad M_{2}=\left\{\left[\begin{array}{l}{1} \\ {0} \\ {0}\end{array}\right],\left[\begin{array}{l}{0} \\ {0} \\ {1}\end{array}\right]\right\}, \quad M_{3}=\left\{\left[\begin{array}{c}{1} \\ {0} \\ {-1}\end{array}\right],\left[\begin{array}{l}{2} \\ {0} \\ {2}\end{array}\right],\left[\begin{array}{l}{1} \\ {0} \\ {0}\end{array}\right]\right\}
+ \]
+ ist in diesem Fall eine Basis des nichtbeobachtbaren Unterraums? Diskutieren Sie für alle Mengen, ob es sich um eine Basis handelt oder nicht.
+\begin{solution}
+Für diesen Parametersatz ergibt sich $\mathcal{O}$ zu:
+\[\mathcal{O} = \text{span}\left\{ \mathbf{c}^T, \mathbf{c}^T\mathbf{A}, \mathbf{c}^T \mathbf{A}^2\right\} =
+\text{span}\left\{ \begin{pmatrix}
+0 & 1 & 0
+\end{pmatrix}\right\}
+\]
+$\mathcal{O}$ ist ein 1-dimensionaler Vektorraum, daher muss $\mathcal{O}^\perp$ 2-dimensional sein. Weiters sieht man, dass $M_2$ offensichtlich der Kern von $M_{\mathcal{O}}$ ist.
+\end{solution}
+\end{enumerate}
+\end{task}
+\end{document}

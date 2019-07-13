@@ -1,0 +1,26 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+
+
+\mdfdefinestyle{style3}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=red!15}
+
+\newmdenv[style = style3,title=false]{disclaimer}
+
+\begin{document}
+\begin{disclaimer}
+\emph{Achtung:} Dies ist keine offizielle Musterlösung für den Übungstest sondern nur eine Ausarbeitung, dieses Dokument ist also sicherlich nicht fehlerfrei. Die Latex-Files befinden sich \href{https://github.com/FritzMichael/AUT1_UE_2017_Klausur2}{hier}, wer Fehler findet darf sie gerne ausbessern, die Files neu kompilieren und die neue Version hochladen.
+\end{disclaimer}
+\end{document}

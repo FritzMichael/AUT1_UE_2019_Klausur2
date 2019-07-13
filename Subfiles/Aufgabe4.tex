@@ -1,0 +1,70 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=false,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}
+\begin{task}
+Gegeben ist das bereits in ein erreichbares Teilsystem und ein Restsystem zerlegte
+LTI-System
+\[ 
+\left[\begin{array}{c}{\dot{\mathbf{x}}_{1}} \\ {\dot{x}_{2}}\end{array}\right]=\left[\begin{array}{ccc}{1} & {0} & {-1} \\ {-1} & {-1} & {2} \\ {0} & {0} & {-2}\end{array}\right]\left[\begin{array}{c}{\mathbf{x}_{1}} \\ {x_{2}}\end{array}\right]+\left[\begin{array}{l}{2} \\ {0} \\ {0}\end{array}\right] u
+ \]
+ \begin{enumerate}[i.]
+     \item Ist das System stabilisierbar? Begründung!
+     \begin{solution}
+     Ja, das System ist stabilisierbar, da der nicht veränderbare Eigenwert des Restsystems negativ ist (-2).
+     \end{solution}
+     \item Entwerfen Sie einen Zustandsregler so, dass alle beeinflussbaren Eigenwerte bei $-1$ liegen.
+     \begin{solution}
+     Das gewünschte Polynom lautet:
+     \[ (\lambda + 1)(\lambda +1)(\lambda +2) = \lambda^3 + 4 \lambda^2 + 5 \lambda + 2\]
+     Bestimmung des Zustandsreglers durch Koeffizientenvergleich:
+     \[\mathbf{k}^T = \begin{pmatrix}k_1 & k_2 & k_3\end{pmatrix}\]
+     \[\det (\mathbf{A} + \mathbf{b}\mathbf{k}^T - \mathbf{E}\lambda) = \det \begin{pmatrix} 1 + 2 k_1 -\lambda & 2 k_2 & -1 + 2 k_3 \\ -1 & -1-\lambda & 2 \\ 0 & 0 & -2-\lambda\end{pmatrix} \rightarrow (-2-\lambda)( (1+2 k_1 -\lambda)(-1-\lambda) + 2 k_2) \]
+     Der erste Term $(-2-\lambda)$, bezeichnet den nicht veränderlichen Eigenwert $-2$. Daher folgt:
+     \[( (1+2 k_1 -\lambda)(-1-\lambda) + 2 k_2) = \lambda^2 - 2 \lambda k_1 -1 -2k_1 + 2k_2 = (\lambda +1)^2 = \lambda^2 + 2 \lambda + 1 \]
+     Koeffizientenvergleich:
+     \[ -2 k_1 = 2 \rightarrow k_1 = -1 \]
+     \[ -1 -2k_1 +2k_2 = 1 + 2k_2 = 1\rightarrow k_2 = 0\]
+     
+     Der Koeffizient $k_3$ kann beliebig gewählt werden, er hat keine Auswirkungen auf die Eigenwerte, wird hier also zu null gesetzt:
+     
+     \[\mathbf{k}^T = \begin{pmatrix}1 & 0 & 0\end{pmatrix}\]
+     \end{solution}
+     \item Ist es möglich, eine Transformation zu finden, die das erreichbare Teilsystem vom Restsystem vollständig entkoppelt? Wenn ja, geben Sie diese explizit an (Sie mussen die Transformation nicht durchführen!) und argumentieren Sie ausführlich falls nicht.
+     \begin{solution}
+     Zuerst muss eine Basis für den erreichbaren Unterraum gefunden werden:
+     \[\mathcal{R} = \text{span}\left\{ \mathbf{b}, \mathbf{Ab}\right\} = \text{span}\left\{ \begin{pmatrix}1\\0\\0\end{pmatrix},\begin{pmatrix}0\\1\\0\end{pmatrix}
+     \right\} \]
+     Um das erreichbare Teilsystem vollständig vom Restsystem zu entkoppeln, muss die komplementäre Basis einen Eigenraum bezüglich $\mathbf{A}$ aufspannen. Es muss also der Eigenvektor gefunden werden der nicht in $\mathcal{R}$ liegt. \\
+     
+     Der Eigenvektor zum bekannten Eigenwert $-2$ ist: $\begin{pmatrix}1 & -5 & 3\end{pmatrix}^T$.\\
+     Die geteste Transformation lautet also:
+     \[ \mathbf{V} = \begin{pmatrix}1 & 0 & 1 \\ 0 & 1 & -5 \\ 0 & 0 & 3\end{pmatrix}, \quad \mathbf{x} = \mathbf{Vz} \]
+     \end{solution}
+ \end{enumerate}
+\end{task}
+\end{document}

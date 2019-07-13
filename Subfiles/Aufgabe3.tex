@@ -1,0 +1,65 @@
+\documentclass[crop=false]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage[framemethod=default]{mdframed}
+\usepackage[nomarginpar,left=2cm,right=2cm,top = 2cm, bottom = 2cm]{geometry}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\alph{subsection}.\roman{subsubsection}}
+
+\mdfdefinestyle{theoremstyle}{%
+linecolor=black,linewidth=.3pt,%
+frametitlerule=true,%
+frametitlebackgroundcolor=blue!5,
+innertopmargin=\topskip,nobreak=true,
+}
+
+\mdfdefinestyle{style2}{frametitle={},%
+             linewidth=.3pt,topline=true,backgroundcolor=blue!3!green!8!}
+
+\mdtheorem[style=theoremstyle]{task}{Angabe}
+
+\newmdenv[style = style2,title=false]{solution}
+
+\begin{document}\begin{task}[Erreichbarkeit und Zustandsregler]
+Gegeben ist das LTI-System
+
+\[ 
+\dot{\mathbf{x}}=\left[\begin{array}{cc}{0} & {1} \\ {5} & {-2}\end{array}\right] \mathbf{x}+\left[\begin{array}{l}{0} \\ {1}\end{array}\right] u
+ \]
+ 
+ \begin{enumerate}[i.]
+  \item Bestimmen Sie einen Zustandsregler $u=\mathbf{k}^{T} \mathbf{x}$ so, dass die Eigenwerte des geschlossenen Kreises bei $\{-1,-2\}$ liegen.
+\begin{solution}
+\[\mathbf{M}_R = \left[\mathbf{b}, \mathbf{Ab} \right] = \begin{pmatrix} 0 & 1\\ 1 & -2 \end{pmatrix}\]
+
+Bestimmung von $\mathbf{t}_1^T$:
+
+\[ \begin{pmatrix} 0 & 1 \end{pmatrix} = \mathbf{t}_1^T \begin{pmatrix} 0 & 1\\ 1 & -2 \end{pmatrix} \rightarrow t_1^T = \begin{pmatrix} 1 & 0 \end{pmatrix}\]
+
+Das gewünschte charakteristische Polynom mit seinen Koeffizienten lautet:
+\[ p(s) = (\lambda + 1)(\lambda + 2) = \lambda^2 + 3 \lambda + 2 \rightarrow \alpha_0 = 2, \ \alpha_1 = 3\]
+Damit ergibt sich der Zustandsregler nach Ackermann zu:
+\[ \mathbf{k}^T = -\alpha_0 \mathbf{t}_1^T - \alpha_1 \mathbf{t}_1^T \mathbf{A} - \mathbf{t}_1^T \mathbf{A}^2 = \begin{pmatrix} -7 & -1 \end{pmatrix}\]
+
+Probe:
+\[ \det (\mathbf{A} + \mathbf{b}\mathbf{k}^T - \mathbf{E}\lambda) = 
+\det \begin{pmatrix} -\lambda & 1 \\ -2 & -3-\lambda \end{pmatrix} = \lambda^2 + 3 \lambda + 2\]
+Entspricht dem gewünschten charakteristischen Polynom, Ergebnis stimmt also.
+\end{solution}
+  \item Geben Sie den Grenzwert $\lim _{t \rightarrow \infty} \mathbf{x}(t)$ für den Anfangszustand $\mathbf{x}(0)=\begin{pmatrix}2 & 1\end{pmatrix}^{T}$ für den geschlossen Kreis an.
+\begin{solution}
+Im geschlossenen Kreis handelt es sich um ein stabiles System mit negativen Eigenwerten. Das System tendiert nach unendlich langer Zeit zum Zustand $\mathbf{x} = \mathbf{0}$.\\
+$\lim _{t \rightarrow \infty} x_{1}(t) = 0$
+\end{solution}
+  \item Beantworten Sie folgende Aussage mit WAHR oder FALSCH und begründen Sie ausführlich: Ein stabilisierbares System ist automatisch immer steuerbar.
+\begin{solution}
+Diese Aussage ist Falsch. Es kann ein nicht steuerbares Teilsystem existieren, dass jedoch stabile Eigenwerte besitzt.
+\end{solution}
+\end{enumerate}
+\end{task}
+\end{document}
